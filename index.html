@@ -1,0 +1,63 @@
+<!-- Structure générale : header, navigation, dashboard, collection, modales, drawers -->
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Sprue Manager</title>
+
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <header class="app-header">
+    <h1>Sprue Manager</h1>
+
+    <nav class="main-nav">
+      <button id="home-btn">Accueil</button>
+      <button id="collection-btn">Collection</button>
+    </nav>
+  </header>
+
+  <body>
+    <section id="home-view">
+      <div class="dashboard-grid">
+        <div id="painting-card-container"></div>
+        <div id="budget-card-container"></div>
+        <div id="ratio-card-container"></div>
+        <div id="goal-card-container"></div>
+      </div>
+    </section>
+
+    <section id="collection-view" class="hidden">
+      <div class="collection-toolbar">
+        <button id="add-miniature-btn">Ajouter une figurine</button>
+
+        <select id="game-filter">
+          <option value="all">Tous les jeux</option>
+          <option value="MCP">Marvel Crisis Protocol</option>
+          <option value="AoS">Age of Sigmar</option>
+          <option value="WC">Warcry</option>
+          <option value="KT">Kill Team</option>
+          <option value="SWL">Star Wars Legion</option>
+        </select>
+
+        <select id="status-filter">
+          <option value="all">Tous les statuts</option>
+          <option value="boxed">Boîte</option>
+          <option value="assembled">Assemblée</option>
+          <option value="primed">Sous-couchée</option>
+          <option value="painted">Peinte</option>
+        </select>
+      </div>
+
+      <div id="miniatures-grid"></div>
+    </section>
+
+    <aside id="drawer-container"></aside>
+
+    <div id="modal-container"></div>
+
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>

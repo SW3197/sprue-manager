@@ -1,0 +1,19 @@
+.hidden {
+    display: none;
+}
+body {
+    min-height: 100vh;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: system-ui, sans-serif;
+}
+
+button,
+select,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}

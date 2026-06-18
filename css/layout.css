@@ -1,0 +1,36 @@
+.app-header {
+  padding: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.main-nav {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+main {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: var(--space-xl);
+}
+
+.collection-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+#miniatures-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-md);
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-md);
+}
