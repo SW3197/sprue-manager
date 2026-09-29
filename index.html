@@ -10,53 +10,79 @@
 
     <link rel="stylesheet" href="./css/style.css" />
   </head>
-  <header class="app-header">
-    <h1>Sprue Manager</h1>
-
-    <nav class="main-nav">
-      <button id="home-btn">Accueil</button>
-      <button id="collection-btn">Collection</button>
-    </nav>
-  </header>
 
   <body>
-    <section id="home-view">
-      <div class="dashboard-grid">
-        <div id="painting-card-container"></div>
-        <div id="budget-card-container"></div>
-        <div id="ratio-card-container"></div>
-        <div id="goal-card-container"></div>
-      </div>
+    <!-- Écran de connexion -->
+    <section id="login-view" class="hidden">
+      <h1>Sprue Manager</h1>
+
+      <form id="login-form">
+        <label for="login-email">E-mail</label>
+        <input type="email" id="login-email" autocomplete="email" required />
+
+        <label for="login-password">Mot de passe</label>
+        <input
+          type="password"
+          id="login-password"
+          autocomplete="current-password"
+          required
+        />
+
+        <button type="submit">Se connecter</button>
+
+        <p id="login-error"></p>
+      </form>
     </section>
 
-    <section id="collection-view" class="hidden">
-      <div class="collection-toolbar">
-        <button id="add-miniature-btn">Ajouter une figurine</button>
+    <!-- Application -->
+    <div id="app-container" class="hidden">
+      <header class="app-header">
+        <h1>Sprue Manager</h1>
 
-        <select id="game-filter">
-          <option value="all">Tous les jeux</option>
-          <option value="MCP">Marvel Crisis Protocol</option>
-          <option value="AoS">Age of Sigmar</option>
-          <option value="WC">Warcry</option>
-          <option value="KT">Kill Team</option>
-          <option value="SWL">Star Wars Legion</option>
-        </select>
+        <nav class="main-nav">
+          <button id="home-btn">Accueil</button>
+          <button id="collection-btn">Collection</button>
+        </nav>
+      </header>
 
-        <select id="status-filter">
-          <option value="all">Tous les statuts</option>
-          <option value="boxed">Boîte</option>
-          <option value="assembled">Assemblée</option>
-          <option value="primed">Sous-couchée</option>
-          <option value="painted">Peinte</option>
-        </select>
-      </div>
+      <section id="home-view">
+        <div class="dashboard-grid">
+          <div id="painting-card-container"></div>
+          <div id="budget-card-container"></div>
+          <div id="ratio-card-container"></div>
+          <div id="goal-card-container"></div>
+        </div>
+      </section>
 
-      <div id="miniatures-grid"></div>
-    </section>
+      <section id="collection-view" class="hidden">
+        <div class="collection-toolbar">
+          <button id="add-miniature-btn">Ajouter une figurine</button>
 
-    <aside id="drawer-container"></aside>
+          <select id="game-filter">
+            <option value="all">Tous les jeux</option>
+            <option value="MCP">Marvel Crisis Protocol</option>
+            <option value="AoS">Age of Sigmar</option>
+            <option value="WC">Warcry</option>
+            <option value="KT">Kill Team</option>
+            <option value="SWL">Star Wars Legion</option>
+          </select>
 
-    <div id="modal-container"></div>
+          <select id="status-filter">
+            <option value="all">Tous les statuts</option>
+            <option value="boxed">Boîte</option>
+            <option value="assembled">Assemblée</option>
+            <option value="primed">Sous-couchée</option>
+            <option value="painted">Peinte</option>
+          </select>
+        </div>
+
+        <div id="miniatures-grid"></div>
+      </section>
+
+      <aside id="drawer-container"></aside>
+
+      <div id="modal-container"></div>
+    </div>
 
     <script type="module" src="./js/app.js"></script>
   </body>
