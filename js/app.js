@@ -27,12 +27,11 @@ async function initApp() {
     data: { session },
   } = await supabase.auth.getSession();
 
-  if (!session) {
-    showLogin();
-    return;
+  if (session) {
+    await loadStateFromCloud();
   }
 
-  await loadStateFromCloud();
+  updateAuthUI(session !== null);
 
   renderHomeView();
   refreshCollection();
@@ -45,7 +44,13 @@ const loginView = document.getElementById("login-view");
 const appContainer = document.getElementById("app-container");
 const loginForm = document.getElementById("login-form");
 const loginError = document.getElementById("login-error");
+const loginButton = document.getElementById("login-button");
 const logoutButton = document.getElementById("logout-button");
+const cancelLoginButton = document.getElementById("cancel-login-button");
+
+loginButton.addEventListener("click", () => {
+  showLogin();
+});
 
 logoutButton.addEventListener("click", async () => {
   const success = await signOut();
@@ -56,7 +61,12 @@ logoutButton.addEventListener("click", async () => {
   }
 
   clearLocalState();
-  showLogin();
+  updateAuthUI(false);
+  showApp();
+});
+
+cancelLoginButton.addEventListener("click", () => {
+  showApp();
 });
 
 loginForm.addEventListener("submit", async (event) => {
@@ -80,6 +90,7 @@ loginForm.addEventListener("submit", async (event) => {
   refreshCollection();
   setupKeyboardShortcuts();
 
+  updateAuthUI(true);
   showApp();
 });
 
@@ -91,6 +102,16 @@ function showLogin() {
 function showApp() {
   loginView.classList.add("hidden");
   appContainer.classList.remove("hidden");
+}
+
+function updateAuthUI(isLoggedIn) {
+  if (isLoggedIn) {
+    loginButton.classList.add("hidden");
+    logoutButton.classList.remove("hidden");
+  } else {
+    loginButton.classList.remove("hidden");
+    logoutButton.classList.add("hidden");
+  }
 }
 
 initApp();
