@@ -2,14 +2,14 @@
 //Il initialise les données, les vues,
 //les écouteurs d'événement.
 import { state } from "./state.js";
-import { loadState, loadStateFromCloud } from "./storage.js";
+import { loadState, loadStateFromCloud, clearLocalState } from "./storage.js";
 import { renderCollection } from "./views/collectionView.js";
 import { openAddMiniatureDrawer } from "./ui/drawers.js";
 import { getFilteredMiniatures } from "./modules/miniatures.js";
 import { renderHomeView } from "./views/homeView.js";
 import { closeDrawer } from "./ui/drawers.js";
 import { closeModal } from "./ui/modals.js";
-import { supabase, signIn } from "./supabase.js";
+import { supabase, signIn, signOut } from "./supabase.js";
 
 function setupKeyboardShortcuts() {
   document.addEventListener("keydown", (event) => {
@@ -45,6 +45,19 @@ const loginView = document.getElementById("login-view");
 const appContainer = document.getElementById("app-container");
 const loginForm = document.getElementById("login-form");
 const loginError = document.getElementById("login-error");
+const logoutButton = document.getElementById("logout-button");
+
+logoutButton.addEventListener("click", async () => {
+  const success = await signOut();
+
+  if (!success) {
+    console.error("La déconnexion a échoué.");
+    return;
+  }
+
+  clearLocalState();
+  showLogin();
+});
 
 loginForm.addEventListener("submit", async (event) => {
   event.preventDefault();

@@ -99,3 +99,11 @@ export async function loadStateFromCloud() {
 
   return cloudState;
 }
+
+export function clearLocalState() {
+  localStorage.removeItem(STORAGE_KEY);
+
+  state.miniatures = [];
+  state.expenses = [];
+  state.paintingSessions = [];
+}
