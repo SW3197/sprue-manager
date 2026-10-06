@@ -7,7 +7,7 @@
 //========================================
 
 import { state } from "./state.js";
-import { loadState, loadStateFromCloud, clearLocalState } from "./storage.js";
+import { loadState, loadStateFromCloud, clearLocalState, saveStateToCloud } from "./storage.js";
 import { renderCollection } from "./views/collectionView.js";
 import { openAddMiniatureDrawer } from "./ui/drawers.js";
 import { getFilteredMiniatures } from "./modules/miniatures.js";
@@ -185,7 +185,7 @@ logoutButton.addEventListener("click", async () => {
 
   renderHomeView();
   refreshCollection();
-  
+
   updateAuthUI(false);
   showApp();
 });
@@ -246,7 +246,11 @@ async function initApp() {
   } = await supabase.auth.getSession();
 
   if (session) {
-    await loadStateFromCloud();
+    const cloudStatus = await loadStateFromCloud();
+
+    if (cloudStatus === "empty") {
+      await saveStateToCloud();
+    }
   }
 
   updateAuthUI(session !== null);
