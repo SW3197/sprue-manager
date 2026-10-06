@@ -29,10 +29,47 @@
         />
 
         <button type="submit">Se connecter</button>
+        <button id="signup-button" type="button">Créer un compte</button>
         <button id="cancel-login-button" type="button">Annuler</button>
 
         <p id="login-error"></p>
       </form>
+    </section>
+
+    <!-- Écran d'inscription -->
+    <section id="signup-view" class="hidden">
+      <h1>Créer un compte</h1>
+
+      <form id="signup-form">
+        <label for="signup-email">E-mail</label>
+        <input type="email" id="signup-email" required />
+
+        <label for="signup-password">Mot de passe</label>
+        <input type="password" id="signup-password" required />
+
+        <button type="submit">Créer mon compte</button>
+        <button id="cancel-signup-button" type="button">Annuler</button>
+
+        <p id="signup-error"></p>
+      </form>
+    </section>
+
+    <!-- Écran d'attente de confirmation mail -->
+    <section id="confirm-email-view" class="hidden">
+      <h1>Confirmez votre adresse e-mail</h1>
+
+      <p>Un e-mail de confirmation vient de vous être envoyé.</p>
+
+      <p>
+        Cliquez sur le lien contenu dans cet e-mail pour terminer la création de
+        votre compte.
+      </p>
+
+      <p>Vos données restent enregistrées sur cet appareil pendant ce temps.</p>
+
+      <button id="continue-as-guest-button" type="button">
+        Continuer en mode visiteur
+      </button>
     </section>
 
     <!-- Application -->

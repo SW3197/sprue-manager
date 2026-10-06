@@ -33,6 +33,22 @@ export async function signIn(email, password) {
   return data.user;
 }
 
+export async function signUp(email, password) {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+  if (error) {
+    console.error("Erreur de création de compte :", error.message);
+    return null;
+  }
+
+  console.log("Compte créé :", data.user);
+  console.log("Session après création :", data.session);
+  return data.user;
+}
+
 export async function signOut() {
   const { error } = await supabase.auth.signOut();
 
