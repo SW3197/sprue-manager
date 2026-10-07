@@ -13,9 +13,6 @@ export async function testSupabaseConnection() {
     console.error("Erreur Supabase :", error);
     return;
   }
-
-  console.log("Connexion à Supabase OK");
-  console.log("Session :", data.session);
 }
 
 export async function signIn(email, password) {
@@ -29,7 +26,6 @@ export async function signIn(email, password) {
     return null;
   }
 
-  console.log("Utilisateur connecté :", data.user);
   return data.user;
 }
 
@@ -47,8 +43,6 @@ export async function signUp(email, password) {
     return null;
   }
 
-  console.log("Compte créé :", data.user);
-  console.log("Session après création :", data.session);
   return data.user;
 }
 
@@ -60,6 +54,5 @@ export async function signOut() {
     return false;
   }
 
-  console.log("Utilisateur déconnecté.");
   return true;
 }

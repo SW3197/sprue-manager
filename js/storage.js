@@ -39,7 +39,6 @@ export async function saveStateToCloud() {
   } = await supabase.auth.getUser();
 
   if (userError || !user) {
-    console.warn("Sauvegarde cloud impossible : aucun utilisateur connecté");
     return;
   }
 

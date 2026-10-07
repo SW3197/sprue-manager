@@ -13,9 +13,12 @@ import { openAddMiniatureDrawer } from "./ui/drawers.js";
 import { getFilteredMiniatures } from "./modules/miniatures.js";
 import { renderHomeView } from "./views/homeView.js";
 import { closeDrawer } from "./ui/drawers.js";
-import { closeModal } from "./ui/modals.js";
+import { requestCloseModal } from "./ui/modals.js";
 import { supabase, signIn, signOut, signUp } from "./supabase.js";
 import { showLogin, showSignup, showConfirmEmail, showApp } from "./authUI.js"
+import { openGuestWarningModal } from "./views/guestWarningModalView.js";
+
+let isLoggedIn = false;
 
 // =======================================
 //ÉLÉMENTS DU DOM - Authentification
@@ -151,7 +154,8 @@ loginForm.addEventListener("submit", async (event) => {
   renderHomeView();
   refreshCollection();
 
-  updateAuthUI(true);
+  isLoggedIn = true;
+  updateAuthUI(isLoggedIn);
   showApp();
 });
 
@@ -186,7 +190,8 @@ logoutButton.addEventListener("click", async () => {
   renderHomeView();
   refreshCollection();
 
-  updateAuthUI(false);
+  isLoggedIn = false;
+  updateAuthUI(isLoggedIn);
   showApp();
 });
 
@@ -208,7 +213,7 @@ collectionBtn.addEventListener("click", () => {
 // =======================================
 
 addMiniatureBtn.addEventListener("click", () => {
-  openAddMiniatureDrawer();
+    openAddMiniatureDrawer();
 });
 
 // =======================================
@@ -233,7 +238,7 @@ function setupKeyboardShortcuts() {
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
       closeDrawer();
-      closeModal();
+      requestCloseModal();
     }
   });
 }
@@ -245,6 +250,8 @@ async function initApp() {
     data: { session },
   } = await supabase.auth.getSession();
 
+  isLoggedIn = session !== null;
+
   if (session) {
     const cloudStatus = await loadStateFromCloud();
 
@@ -253,13 +260,23 @@ async function initApp() {
     }
   }
 
-  updateAuthUI(session !== null);
+  updateAuthUI(isLoggedIn);
 
   renderHomeView();
   refreshCollection();
   setupKeyboardShortcuts();
 
   showApp();
+  if (!isLoggedIn) {
+    openGuestWarningModal(
+      () => {
+        showLogin();
+      },
+      () => {
+        showSignup();
+      }
+    );
+  }
 }
 
 initApp();

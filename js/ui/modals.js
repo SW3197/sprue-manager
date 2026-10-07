@@ -1,10 +1,15 @@
-export function openModal(content) {
+let currentModalClosable = true;
+
+export function openModal(content, options = {}) {
+    const { closable = true } = options;
+    currentModalClosable = closable;
+
     const modalContainer = document.getElementById("modal-container");
     
     modalContainer.innerHTML = `
         <div class="modal-overlay">
             <div class="modal">
-                <button id="close-modal-btn">X</button>
+                ${closable ? '<button id="close-modal-btn">X</button>' : ''}
                 
                 ${content}
             </div>
@@ -15,9 +20,17 @@ export function openModal(content) {
 
     const closeModalBtn = document.getElementById("close-modal-btn");
 
-    closeModalBtn.addEventListener("click", () => {
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener("click", () => {
+            requestCloseModal();
+        });
+    }
+}
+
+export function requestCloseModal() {
+    if (currentModalClosable) {
         closeModal();
-    });
+    }
 }
 
 export function closeModal() {
@@ -31,7 +44,7 @@ function setupModalOverlay() {
     const modal = document.querySelector(".modal");
 
     modalOverlay.addEventListener("click", () => {
-        closeModal();
+        requestCloseModal();
     });
 
     modal.addEventListener("click", (event) => {
