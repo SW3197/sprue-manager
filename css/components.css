@@ -208,3 +208,41 @@ button {
   flex-direction: column;
   gap: 0.75rem;
 }
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+#signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.auth-secondary-button {
+  background: transparent;
+  border: 1px solid var(--color-accent);
+  color: inherit;
+}
+
+.auth-link-button {
+  background: transparent;
+  color: inherit;
+  padding: 0.25rem;
+  font-weight: 400;
+}
+
+.auth-view {
+  width: 100%;
+  max-width: 440px;
+  padding: 2rem;
+  margin: 2rem auto;
+  background: var(--color-surface);
+  border-radius: 12px;
+}

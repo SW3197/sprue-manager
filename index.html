@@ -13,8 +13,8 @@
 
   <body>
     <!-- Écran de connexion -->
-    <section id="login-view" class="hidden">
-      <h1>Sprue Manager</h1>
+    <section id="login-view" class="auth-view hidden">
+      <h1>Connexion</h1>
 
       <form id="login-form">
         <label for="login-email">E-mail</label>
@@ -28,19 +28,30 @@
           required
         />
 
-        <button type="button" id="forgot-password-button">
+        <button type="submit" class="auth-primary-button">Se connecter</button>
+
+        <button id="signup-button" type="button" class="auth-secondary-button">
+          Créer un compte
+        </button>
+
+        <button
+          type="button"
+          id="forgot-password-button"
+          class="auth-link-button"
+        >
           Mot de passe oublié ?
         </button>
-        <button type="submit">Se connecter</button>
-        <button id="signup-button" type="button">Créer un compte</button>
-        <button id="cancel-login-button" type="button">Annuler</button>
+
+        <button id="cancel-login-button" type="button" class="auth-link-button">
+          Continuer en mode visiteur
+        </button>
 
         <p id="login-error"></p>
       </form>
     </section>
 
     <!-- Écran d'inscription -->
-    <section id="signup-view" class="hidden">
+    <section id="signup-view" class="auth-view hidden">
       <h1>Créer un compte</h1>
 
       <form id="signup-form">
@@ -50,8 +61,16 @@
         <label for="signup-password">Mot de passe</label>
         <input type="password" id="signup-password" required />
 
-        <button type="submit">Créer mon compte</button>
-        <button id="cancel-signup-button" type="button">Annuler</button>
+        <button type="submit" class="auth-primary-button">
+          Créer mon compte
+        </button>
+        <button
+          id="cancel-signup-button"
+          type="button"
+          class="auth-link-button"
+        >
+          Annuler
+        </button>
 
         <p id="signup-error"></p>
       </form>
