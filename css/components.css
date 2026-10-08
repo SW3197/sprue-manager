@@ -123,13 +123,7 @@ button {
   padding-left: 1.2rem;
 }
 
-.expense-item {
-    display: grid;
-    grid-template-columns: 1fr 80px 40px;
-    align-items: center;
-    gap: var(--space-md);
-}
-
+.expense-item,
 .miniature-item {
     display: grid;
     grid-template-columns: 1fr 80px 40px;
@@ -161,9 +155,6 @@ button {
   max-width: 480px;
   width: calc(100% - 2rem);
   text-align: center;
-}
-
-.modal {
   position: relative;
 }
 
@@ -209,15 +200,7 @@ button {
   gap: 0.75rem;
 }
 
-#login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  width: 100%;
-  max-width: 400px;
-}
-
-#signup-form {
+.auth-view form {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
