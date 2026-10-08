@@ -56,3 +56,29 @@ export async function signOut() {
 
   return true;
 }
+
+export async function resetPassword(email) {
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.href,
+  });
+
+  if (error) {
+    console.error("Erreur lors de la demande de réinitialisation :", error);
+    throw error;
+  }
+}
+
+export async function updatePassword(password) {
+  const { error } = await supabase.auth.updateUser({
+    password,
+  });
+
+  if (error) {
+    console.error("Erreur lors de la modification du mot de passe :", error);
+    throw error;
+  }
+}
+
+export function onAuthStateChange(callback) {
+  return supabase.auth.onAuthStateChange(callback);
+}

@@ -13,10 +13,11 @@ import { openAddMiniatureDrawer } from "./ui/drawers.js";
 import { getFilteredMiniatures } from "./modules/miniatures.js";
 import { renderHomeView } from "./views/homeView.js";
 import { closeDrawer } from "./ui/drawers.js";
-import { requestCloseModal } from "./ui/modals.js";
-import { supabase, signIn, signOut, signUp } from "./supabase.js";
+import { closeModal, requestCloseModal } from "./ui/modals.js";
+import { supabase, signIn, signOut, signUp, onAuthStateChange } from "./supabase.js";
 import { showLogin, showSignup, showConfirmEmail, showApp } from "./authUI.js"
 import { openGuestWarningModal } from "./views/guestWarningModalView.js";
+import { openPasswordResetRequestModal, openPasswordResetModal } from "./views/passwordResetModalView.js";
 
 let isLoggedIn = false;
 
@@ -27,6 +28,7 @@ let isLoggedIn = false;
 const loginForm = document.getElementById("login-form");
 const loginError = document.getElementById("login-error");
 const loginButton = document.getElementById("login-button");
+const loginEmailInput = document.getElementById("login-email");
 
 const cancelLoginButton = document.getElementById("cancel-login-button");
 
@@ -38,6 +40,8 @@ const signupError = document.getElementById("signup-error");
 const continueAsGuestButton = document.getElementById("continue-as-guest-button");
 
 const logoutButton = document.getElementById("logout-button");
+
+const forgotPasswordButton = document.getElementById("forgot-password-button");
 
 // =======================================
 //ÉLÉMENTS DU DOM - Application
@@ -139,7 +143,7 @@ loginForm.addEventListener("submit", async (event) => {
 
   loginError.textContent = "";
 
-  const email = document.getElementById("login-email").value;
+  const email = loginEmailInput.value.trim();
   const password = document.getElementById("login-password").value;
 
   const user = await signIn(email, password);
@@ -193,6 +197,12 @@ logoutButton.addEventListener("click", async () => {
   isLoggedIn = false;
   updateAuthUI(isLoggedIn);
   showApp();
+});
+
+forgotPasswordButton.addEventListener("click", () => {
+  const email = loginEmailInput.value.trim();
+
+  openPasswordResetRequestModal(email);
 });
 
 // =======================================
@@ -278,5 +288,24 @@ async function initApp() {
     );
   }
 }
+
+onAuthStateChange((event) => {
+  if (event === "PASSWORD_RECOVERY") {
+    openPasswordResetModal(async () => {
+      const success = await signOut();
+
+      if (!success) {
+        console.error("La déconnexion a échoué.");
+        return;
+      }
+
+      clearLocalState();
+
+      isLoggedIn = false;
+      closeModal();
+      showLogin();
+    });
+  }
+});
 
 initApp();

@@ -92,7 +92,7 @@ export function openPaintingTimeDrawer() {
         <section>
             <h3>Total cumulé</h3>
             <p>${formattedTotal}</p>
-        </section
+        </section>
         
         <section>
             <h3>Ajouter une session</h3>

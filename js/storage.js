@@ -58,8 +58,6 @@ export async function saveStateToCloud() {
     console.error("Erreur de sauvegarde cloud :", error);
     return;
   }
-
-  console.log("Sauvegarde cloud réussie");
 }
 
 export async function loadStateFromCloud() {
@@ -69,7 +67,6 @@ export async function loadStateFromCloud() {
   } = await supabase.auth.getUser();
 
   if (userError || !user) {
-    console.warn("Chargement cloud impossible : aucun utilisateur connecté.");
     return "error";
   }
 
@@ -85,7 +82,6 @@ export async function loadStateFromCloud() {
   }
 
   if (!data) {
-    console.log("Aucune sauvegarde cloud trouvée.");
     return "empty";
   }
 
@@ -97,9 +93,6 @@ export async function loadStateFromCloud() {
 
   // On met aussi à jour la sauvegarde locale.
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-
-  console.log("État restauré depuis Supabase.");
-  console.log("Dernière sauvegarde :", data.updated_at);
 
   return "loaded";
 }
