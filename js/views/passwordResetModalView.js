@@ -82,12 +82,12 @@ export function openPasswordResetModal(onReturnToLogin) {
                     required
                 >
 
-                <p id="password-reset-message"></p>
-                
                 <button type="submit">
                     Modifier mon mot de passe
                 </button>
             </form>
+
+            <p id="password-reset-message"></p>
 
             <button
                 type="button"

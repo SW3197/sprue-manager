@@ -56,3 +56,16 @@
   display: block;
   margin: 0 auto;
 }
+
+/*
+   =====================================
+   ADAPTATION MOBILE
+   =====================================
+*/
+
+@media (max-width: 600px) {
+  .auth-view {
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+}
