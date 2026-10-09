@@ -20,6 +20,7 @@ import { openGuestWarningModal } from "./views/guestWarningModalView.js";
 import { openPasswordResetRequestModal, openPasswordResetModal } from "./views/passwordResetModalView.js";
 
 let isLoggedIn = false;
+let isPasswordRecovery = false;
 
 // =======================================
 //ÉLÉMENTS DU DOM - Authentification
@@ -277,7 +278,7 @@ async function initApp() {
   setupKeyboardShortcuts();
 
   showApp();
-  if (!isLoggedIn) {
+  if (!isLoggedIn && !isPasswordRecovery) {
     openGuestWarningModal(
       () => {
         showLogin();
@@ -290,7 +291,11 @@ async function initApp() {
 }
 
 onAuthStateChange((event) => {
+  console.log("Événement Supabase :", event);
+
   if (event === "PASSWORD_RECOVERY") {
+    isPasswordRecovery = true;
+
     openPasswordResetModal(async () => {
       const success = await signOut();
 
