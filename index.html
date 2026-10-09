@@ -77,8 +77,8 @@
     </section>
 
     <!-- Écran d'attente de confirmation mail -->
-    <section id="confirm-email-view" class="hidden">
-      <h1>Confirmez votre adresse e-mail</h1>
+    <section id="confirm-email-view" class="auth-view hidden">
+      <h1>Confirmez votre e-mail</h1>
 
       <p>Un e-mail de confirmation vient de vous être envoyé.</p>
 
@@ -87,9 +87,23 @@
         votre compte.
       </p>
 
-      <p>Vos données restent enregistrées sur cet appareil pendant ce temps.</p>
+      <p>
+        <strong
+          >Important : pour conserver vos données visiteur, ouvrez le lien de
+          confirmation sur cet appareil, dans le même navigateur.</strong
+        >
+      </p>
 
-      <button id="continue-as-guest-button" type="button">
+      <p>
+        Si vous confirmez votre compte sur un autre appareil, vos données
+        visiteur risquent de ne pas être transférées.
+      </p>
+
+      <button
+        id="continue-as-guest-button"
+        type="button"
+        class="auth-secondary-button"
+      >
         Continuer en mode visiteur
       </button>
     </section>
