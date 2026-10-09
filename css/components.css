@@ -92,6 +92,22 @@
   padding-left: 1.2rem;
 }
 
+/*
+   =====================================
+   BUDGET HOBBY — ADAPTATION MOBILE
+   =====================================
+*/
+
+@media (max-width: 600px) {
+  .budget-columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .budget-column {
+    min-width: 0;
+  }
+}
+
 /* 
    =====================================
    ÉLÉMENTS DE COLLECTION ET D'HISTORIQUE

@@ -32,6 +32,18 @@
   display: none !important;
 }
 
+/*
+   =====================================
+   MODÈLE DE DIMENSIONNEMENT
+   =====================================
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* 
    =====================================
    STYLES GLOBAUX

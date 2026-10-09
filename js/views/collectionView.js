@@ -45,6 +45,7 @@ export function renderCollection(miniaturesToRender = miniatures) {
 
         <select
             class="status-select"
+            name="miniature-status"
             data-id="${miniature.id}"
             >
             <option value="boxed" ${miniature.status === "boxed" ? "selected" : ""}>
