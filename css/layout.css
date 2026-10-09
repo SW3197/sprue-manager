@@ -1,3 +1,9 @@
+/* 
+   =====================================
+   EN-TÊTE ET NAVIGATION
+   =====================================
+*/
+
 .app-header {
   padding: var(--space-lg);
   border-bottom: 1px solid var(--color-border);
@@ -10,11 +16,11 @@
   margin-top: var(--space-md);
 }
 
-main {
-  width: min(1100px, 100%);
-  margin: 0 auto;
-  padding: var(--space-xl);
-}
+/* 
+   =====================================
+   BARRE D'OUTILS DE COLLECTION
+   =====================================
+*/
 
 .collection-toolbar {
   display: flex;
@@ -23,12 +29,13 @@ main {
   margin-bottom: var(--space-lg);
 }
 
-#miniatures-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: var(--space-md);
-}
+/* 
+   =====================================
+   GRILLES DE CARTES
+   =====================================
+*/
 
+#miniatures-grid,
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

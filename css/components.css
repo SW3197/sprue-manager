@@ -1,18 +1,8 @@
-button,
-select,
-input {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 0.7rem 1rem;
-  background: var(--color-surface-light);
-  color: var(--color-text);
-}
-
-button {
-  background: var(--color-accent);
-  border: none;
-  font-weight: 700;
-}
+/* 
+   =====================================
+   CARTES DE COLLECTION
+   =====================================
+*/
 
 .miniature-card {
   padding: var(--space-lg);
@@ -30,46 +20,11 @@ button {
   color: var(--color-muted);
 }
 
-.drawer-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  justify-content: flex-end;
-  z-index: 900;
-}
-
-.drawer.drawer-wide {
-  width: min(900px, 100%);
-}
-
-.drawer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: min(420px, 100%);
-  height: 100vh;
-  padding: var(--space-xl);
-  background: var(--color-surface);
-  border-left: 1px solid var(--color-border);
-  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.35);
-  z-index: 1000;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
-
-#close-drawer-btn {
-  position: absolute;
-  top: var(--space-md);
-  right: var(--space-md);
-  z-index: 1001;
-}
-
-.drawer form {
-  display: grid;
-  gap: var(--space-md);
-  margin-top: var(--space-lg);
-}
+/* 
+   =====================================
+   CARTES DU DASHBOARD
+   =====================================
+*/
 
 .dashboard-card {
   background: var(--color-surface);
@@ -92,6 +47,18 @@ button {
   transform: translateY(-2px);
   border-color: var(--color-accent);
 }
+
+.dashboard-card h2,
+.dashboard-card p,
+.dashboard-card small {
+  margin: 0;
+}
+
+/* 
+   =====================================
+   BUDGET
+   =====================================
+*/
 
 .budget-total {
   margin-top: var(--space-md);
@@ -125,61 +92,17 @@ button {
   padding-left: 1.2rem;
 }
 
+/* 
+   =====================================
+   ÉLÉMENTS DE COLLECTION ET D'HISTORIQUE
+   =====================================
+*/
+
 .expense-item,
 .miniature-item {
   display: grid;
   grid-template-columns: 1fr 80px 40px;
   align-items: center;
-  gap: var(--space-md);
-}
-
-.dashboard-card h2,
-.dashboard-card p,
-.dashboard-card small {
-  margin: 0;
-}
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal {
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--space-lg);
-  max-width: 480px;
-  width: calc(100% - 2rem);
-  text-align: center;
-  position: relative;
-}
-
-#close-modal-btn {
-  position: absolute;
-  top: var(--space-sm);
-  right: var(--space-sm);
-}
-
-.modal-main-value {
-  font-size: 2rem;
-  font-weight: 700;
-}
-
-.ratio-status-list {
-  list-style: none;
-  padding: 0;
-  margin: var(--space-md) 0;
-}
-
-.ratio-status-list li {
-  display: flex;
-  justify-content: space-between;
   gap: var(--space-md);
 }
 
@@ -194,40 +117,4 @@ button {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-}
-
-.password-reset-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.auth-view form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  width: 100%;
-  max-width: 400px;
-}
-
-.auth-secondary-button {
-  background: transparent;
-  border: 1px solid var(--color-accent);
-  color: inherit;
-}
-
-.auth-link-button {
-  background: transparent;
-  color: inherit;
-  padding: 0.25rem;
-  font-weight: 400;
-}
-
-.auth-view {
-  width: 100%;
-  max-width: 440px;
-  padding: 2rem;
-  margin: 2rem auto;
-  background: var(--color-surface);
-  border-radius: 12px;
 }

@@ -1,0 +1,67 @@
+/* 
+   =====================================
+   OVERLAY
+   =====================================
+*/
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* 
+   =====================================
+   FENÊTRE
+   =====================================
+*/
+
+.modal {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  max-width: 480px;
+  width: calc(100% - 2rem);
+  text-align: center;
+  position: relative;
+}
+
+/* 
+   =====================================
+   COMMANDES
+   =====================================
+*/
+
+#close-modal-btn {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+}
+
+/* 
+   =====================================
+   CONTENUS SPÉCIFIQUES
+   =====================================
+*/
+
+.modal-main-value {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.ratio-status-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-md) 0;
+}
+
+.ratio-status-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-md);
+}

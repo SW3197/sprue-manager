@@ -1,0 +1,70 @@
+/* 
+   =====================================
+   OVERLAY
+   =====================================
+*/
+
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: flex-end;
+  z-index: 900;
+}
+
+/* 
+   =====================================
+   DRAWER PRINCIPAL
+   =====================================
+*/
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(420px, 100%);
+  height: 100vh;
+  padding: var(--space-xl);
+  background: var(--color-surface);
+  border-left: 1px solid var(--color-border);
+  box-shadow: -10px 0 30px rgba(0, 0, 0, 0.35);
+  z-index: 1000;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* 
+   =====================================
+   VARIANTE LARGE
+   =====================================
+*/
+
+.drawer.drawer-wide {
+  width: min(900px, 100%);
+}
+
+/* 
+   =====================================
+   BOUTON DE FERMETURE
+   =====================================
+*/
+
+#close-drawer-btn {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  z-index: 1001;
+}
+
+/* 
+   =====================================
+   FORMULAIRES DES DRAWERS
+   =====================================
+*/
+
+.drawer form {
+  display: grid;
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+}
