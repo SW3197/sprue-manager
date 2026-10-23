@@ -22,9 +22,30 @@ export function setupDeleteExpenseButtons() {
     });
 }
 
-export function openBudgetDrawer() {
+function sortBudgetItems(items, sortBy) {
+    const sortedItems = [...items];
 
-    const miniatureItems = state.miniatures.map((miniature) => {
+    switch (sortBy) {
+        case "newest":
+            return sortedItems.sort((a, b) => b.id -a.id);
+
+        case "oldest":
+            return sortedItems.sort((a, b) => a.id - b.id);
+        
+        case "price-desc":
+            return sortedItems.sort((a, b) => b.price - a.price);
+
+        case "price-asc":
+            return sortedItems.sort((a, b) => a.price - b.price);
+
+        default:
+            return sortedItems;
+    }
+}
+
+function renderMiniaturesBudgetList(sortBy = "newest") {
+    const miniatureItems = sortBudgetItems(state.miniatures, sortBy)
+    .map((miniature) => {
         return `
             <li class="miniature-item">
                 <span>${miniature.name}</span>
@@ -33,24 +54,38 @@ export function openBudgetDrawer() {
         `;
     }).join("");
 
-    const miniaturesTotal = getMiniaturesTotal();
+    return miniatureItems || "<li>Aucune figurine enregistrée pour le moment</li>"
+}
 
-    const expensesTotal = getExpensesTotal();
-
-    const expenseItems = state.expenses.map((expense) => {
+function renderExpensesBudgetList(sortBy = "newest") {
+    const expenseItems = sortBudgetItems(state.expenses, sortBy).map((expense) => {
         return `
             <li class="expense-item">
                 <span class="expense-name">${expense.name}</span>
                 <strong class="expense-price">${Number(expense.price || 0).toFixed(2)} €</strong>
+
                 <button
                     class="delete-expense-btn"
                     data-expense-id="${expense.id}"
                 >
-                X
+                    X
                 </button>
             </li>
         `;
     }).join("");
+
+    return expenseItems || "<li>Aucune dépense enregistrée pour le moment</li>";
+}
+
+export function openBudgetDrawer() {
+
+    const miniatureItems = renderMiniaturesBudgetList();
+
+    const miniaturesTotal = getMiniaturesTotal();
+
+    const expensesTotal = getExpensesTotal();
+
+    const expenseItems = renderExpensesBudgetList();
 
     const globalTotal = getBudgetTotal();
 
@@ -95,7 +130,7 @@ export function openBudgetDrawer() {
                     </select>
                 </label>
 
-                <ul>
+                <ul id="miniatures-budget-list">
                     ${miniatureItems || "<li>Aucune figurine enregistrée pour le moment</li>"}
                 </ul>
             </section>
@@ -114,7 +149,7 @@ export function openBudgetDrawer() {
                     </select>
                 </label>
 
-                <ul>
+                <ul id="expenses-budget-list">
                     ${expenseItems || "<li>Aucune dépense enregistrée pour le moment</li>"}
                 </ul>
             </section>
@@ -122,10 +157,38 @@ export function openBudgetDrawer() {
 
     `, "drawer-wide");
 
+// =======================================
+// FILTRES DE TRI CÔTÉ MINIATURES
+// =======================================
+
+    const miniaturesSortSelect = document.getElementById("miniatures-budget-sort");
+
+    miniaturesSortSelect.addEventListener("change", () => {
+        const sortBy = miniaturesSortSelect.value;
+
+        const miniaturesList = document.getElementById("miniatures-budget-list");
+
+        miniaturesList.innerHTML = renderMiniaturesBudgetList(sortBy);
+    });
+
+// =======================================
+// FILTRES DE TRI CÔTÉ DÉPENSES HOBBY
+// =======================================
+
+    const expensesSortSelect = document.getElementById("expenses-budget-sort");
+
+    expensesSortSelect.addEventListener("change", () => {
+        const sortBy = expensesSortSelect.value;
+
+        const expensesList = document.getElementById("expenses-budget-list");
+
+        expensesList.innerHTML = renderExpensesBudgetList(sortBy);
+
+        setupDeleteExpenseButtons();
+    });
+
     setupAddExpenseForm();
 
     setupDeleteExpenseButtons();
     
 }
-
-//TODO : brancher les filtres

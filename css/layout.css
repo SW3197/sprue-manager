@@ -22,7 +22,8 @@
    =====================================
 */
 
-.collection-toolbar {
+.collection-toolbar,
+.wishlist-toolbar {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-md);

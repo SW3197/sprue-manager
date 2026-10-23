@@ -6,7 +6,6 @@ décors, etc.
 import { state } from "../state.js";
 import { saveState } from "../storage.js";
 import { createId } from "../utils/ids.js";
-import { openBudgetDrawer } from "../views/budgetDrawerView.js";
 
 export function addExpense(name, price) {
     const expense = {

@@ -116,6 +116,7 @@
         <nav class="main-nav">
           <button id="home-btn">Accueil</button>
           <button id="collection-btn">Collection</button>
+          <button id="wishlist-btn">Wishlist</button>
           <button id="logout-button" type="button">Déconnexion</button>
           <button id="login-button" type="button">Se connecter</button>
         </nav>
@@ -153,6 +154,22 @@
         </div>
 
         <div id="miniatures-grid"></div>
+      </section>
+
+      <section id="wishlist-view" class="hidden">
+        <div class="wishlist-toolbar">
+          <button id="add-wishlist-btn">Ajouter un souhait</button>
+
+          <select id="wishlist-filter">
+            <option value="all">Tous les souhaits</option>
+            <option value="miniatures">Figurines</option>
+            <option value="hobby">Matériel hobby</option>
+          </select>
+        </div>
+
+        <div id="wishlist-grid">
+          <p>Aucun souhait enregistré pour le moment.</p>
+        </div>
       </section>
 
       <aside id="drawer-container"></aside>

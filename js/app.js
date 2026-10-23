@@ -56,6 +56,9 @@ const collectionView = document.getElementById("collection-view");
 
 const addMiniatureBtn = document.getElementById("add-miniature-btn");
 
+const wishlistBtn = document.getElementById("wishlist-btn");
+const wishlistView = document.getElementById("wishlist-view");
+
 // =======================================
 //ÉLÉMENTS DU DOM - Filtres
 // =======================================
@@ -82,6 +85,7 @@ function showView(viewName) {
 
   homeView.classList.add("hidden");
   collectionView.classList.add("hidden");
+  wishlistView.classList.add("hidden");
 
   if (viewName === "home") {
     homeView.classList.remove("hidden");
@@ -89,6 +93,10 @@ function showView(viewName) {
 
   if (viewName === "collection") {
     collectionView.classList.remove("hidden");
+  }
+
+  if (viewName === "wishlist") {
+    wishlistView.classList.remove("hidden");
   }
 }
 
@@ -217,6 +225,10 @@ homeBtn.addEventListener("click", () => {
 
 collectionBtn.addEventListener("click", () => {
   showView("collection");
+});
+
+wishlistBtn.addEventListener("click", () => {
+  showView("wishlist");
 });
 
 // =======================================
