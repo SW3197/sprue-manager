@@ -55,6 +55,7 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: system-ui, sans-serif;
+  margin: 0;
 }
 
 /* 

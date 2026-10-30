@@ -110,67 +110,133 @@
 
     <!-- Application -->
     <div id="app-container" class="hidden">
-      <header class="app-header">
+      <aside class="app-sidebar">
         <h1>Sprue Manager</h1>
 
-        <nav class="main-nav">
-          <button id="home-btn">Accueil</button>
-          <button id="collection-btn">Collection</button>
-          <button id="wishlist-btn">Wishlist</button>
-          <button id="logout-button" type="button">Déconnexion</button>
-          <button id="login-button" type="button">Se connecter</button>
+        <nav
+          class="main-nav"
+          class="main-nav"
+          aria-label="Navigation principale"
+        >
+          <button id="home-btn" type="button">Accueil</button>
+          <button id="collection-btn" type="button">Collection</button>
+          <button id="sessions-btn" type="button">Sessions hobby</button>
+          <button id="budget-btn" type="button">Budget</button>
+          <button id="goals-btn" type="button">Objectifs</button>
+          <button id="events-btn" type="button">Evénements</button>
         </nav>
-      </header>
 
-      <section id="home-view">
-        <div class="dashboard-grid">
-          <div id="painting-card-container"></div>
-          <div id="budget-card-container"></div>
-          <div id="ratio-card-container"></div>
-          <div id="goal-card-container"></div>
+        <div class="sidebar-auth">
+          <button id="logout-button" type="button">Se déconnecter</button>
+          <button id="login-button" type="button">Se connecter</button>
         </div>
-      </section>
+      </aside>
 
-      <section id="collection-view" class="hidden">
-        <div class="collection-toolbar">
-          <button id="add-miniature-btn">Ajouter une figurine</button>
+      <div id="sidebar-overlay" class="sidebar-overlay hidden"></div>
 
-          <select id="game-filter">
-            <option value="all">Tous les jeux</option>
-            <option value="MCP">Marvel Crisis Protocol</option>
-            <option value="AoS">Age of Sigmar</option>
-            <option value="WC">Warcry</option>
-            <option value="KT">Kill Team</option>
-            <option value="SWL">Star Wars Legion</option>
-          </select>
+      <main class="app-main">
+        <header class="mobile-header">
+          <button
+            id="mobile-menu-btn"
+            type="button"
+            aria-label="Ouvrir le menu de navigation"
+            aria-expanded="false"
+            aria-controls="main-navigation"
+          >
+            ☰
+          </button>
 
-          <select id="status-filter">
-            <option value="all">Tous les statuts</option>
-            <option value="boxed">Boîte</option>
-            <option value="assembled">Assemblée</option>
-            <option value="primed">Sous-couchée</option>
-            <option value="painted">Peinte</option>
-          </select>
-        </div>
+          <span>Sprue Manager</span>
+        </header>
+        <section id="home-view">
+          <div class="dashboard-grid">
+            <div id="painting-card-container"></div>
+            <div id="budget-card-container"></div>
+            <div id="ratio-card-container"></div>
+            <div id="goal-card-container"></div>
+          </div>
+        </section>
 
-        <div id="miniatures-grid"></div>
-      </section>
+        <section id="collection-page" class="hidden">
+          <nav class="page-tabs" aria-label="Onglets de la collection">
+            <button id="units-tab" type="button">Mes unités</button>
+            <button id="transactions-tab" type="button">
+              Mes transactions
+            </button>
+            <button id="wishlist-tab" type="button">Ma wishlist</button>
+          </nav>
 
-      <section id="wishlist-view" class="hidden">
-        <div class="wishlist-toolbar">
-          <button id="add-wishlist-btn">Ajouter un souhait</button>
+          <section id="collection-view">
+            <div class="collection-toolbar">
+              <button id="add-miniature-btn">Ajouter une figurine</button>
 
-          <select id="wishlist-filter">
-            <option value="all">Tous les souhaits</option>
-            <option value="miniatures">Figurines</option>
-            <option value="hobby">Matériel hobby</option>
-          </select>
-        </div>
+              <select id="game-filter">
+                <option value="all">Tous les jeux</option>
+                <option value="MCP">Marvel Crisis Protocol</option>
+                <option value="AoS">Age of Sigmar</option>
+                <option value="WC">Warcry</option>
+                <option value="KT">Kill Team</option>
+                <option value="SWL">Star Wars Legion</option>
+              </select>
 
-        <div id="wishlist-grid">
-          <p>Aucun souhait enregistré pour le moment.</p>
-        </div>
-      </section>
+              <select id="status-filter">
+                <option value="all">Tous les statuts</option>
+                <option value="boxed">Boîte</option>
+                <option value="assembled">Assemblée</option>
+                <option value="primed">Sous-couchée</option>
+                <option value="painted">Peinte</option>
+              </select>
+            </div>
+
+            <div id="miniatures-grid"></div>
+          </section>
+
+          <section id="transactions-view" class="hidden">
+            <h2>Mes transactions</h2>
+            <p>Cette section sera développée prochainement.</p>
+          </section>
+
+          <section id="wishlist-view" class="hidden">
+            <div class="wishlist-toolbar">
+              <button id="add-wishlist-btn">Ajouter un souhait</button>
+
+              <select id="wishlist-filter">
+                <option value="all">Tous les souhaits</option>
+                <option value="miniatures">Figurines</option>
+                <option value="hobby">Matériel hobby</option>
+              </select>
+            </div>
+
+            <div id="wishlist-grid">
+              <p>Aucun souhait enregistré pour le moment.</p>
+            </div>
+          </section>
+        </section>
+
+        <!-- Page Sessions hobby -->
+        <section id="sessions-page" class="hidden">
+          <h2>Sessions hobby</h2>
+          <p>Cette page sera développée prochainement.</p>
+        </section>
+
+        <!-- Page Budget -->
+        <section id="budget-page" class="hidden">
+          <h2>Budget</h2>
+          <p>Cette page sera développée prochainement.</p>
+        </section>
+
+        <!-- Page Objectifs -->
+        <section id="goals-page" class="hidden">
+          <h2>Objectifs</h2>
+          <p>Cette page sera développée prochainement.</p>
+        </section>
+
+        <!-- Page Événements -->
+        <section id="events-page" class="hidden">
+          <h2>Événements</h2>
+          <p>Cette page sera développée prochainement.</p>
+        </section>
+      </main>
 
       <aside id="drawer-container"></aside>
     </div>

@@ -4,14 +4,44 @@
    =====================================
 */
 
+.app-sidebar h1 {
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
 .app-header {
   padding: var(--space-lg);
   border-bottom: 1px solid var(--color-border);
   background: var(--color-surface);
 }
 
+#app-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.app-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+
+  background: #db7529;
+  border-right: 1px solid var(--color-border);
+  padding: var(--space-lg);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-lg);
+}
+
 .main-nav {
   display: flex;
+  flex-direction: column;
   gap: var(--space-md);
   margin-top: var(--space-md);
 }
@@ -41,4 +71,175 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: var(--space-md);
+}
+
+/* Navigation intégrée à la barre latérale */
+
+.app-sidebar .main-nav {
+  gap: 0;
+  margin-top: 0;
+}
+
+.app-sidebar .main-nav button {
+  width: 100%;
+  padding: 14px 16px;
+
+  background: transparent;
+  border: none;
+  border-radius: 0;
+
+  color: #ffffff;
+  text-align: left;
+  font: inherit;
+
+  cursor: pointer;
+}
+
+.app-sidebar .main-nav button:hover {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.app-sidebar .main-nav button.active {
+  background: rgba(0, 0, 0, 0.18);
+  font-weight: 600;
+}
+
+.sidebar-auth {
+  margin-top: auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding-top: var(--space-md);
+}
+
+.sidebar-auth button {
+  width: 100%;
+  padding: 14px 16px;
+
+  background: transparent;
+  border: none;
+  border-radius: 0;
+
+  color: #ffffff;
+  text-align: left;
+  font: inherit;
+
+  cursor: pointer;
+}
+
+.sidebar-auth button:hover {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* =====================================
+   ONGLETS INTERNES DES PAGES
+   ===================================== */
+
+.page-tabs {
+  display: flex;
+  gap: var(--space-lg);
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--space-lg);
+}
+
+.page-tabs button {
+  background: transparent;
+  border: none;
+  border-bottom: 3px solid transparent;
+  border-radius: 0;
+
+  padding: 12px 4px;
+  margin-bottom: -1px;
+
+  font: inherit;
+  color: var(--color-text);
+  cursor: pointer;
+}
+
+.page-tabs button:hover {
+  color: #db7529;
+}
+
+.page-tabs button.active {
+  border-bottom-color: #db7529;
+  color: #db7529;
+  font-weight: 600;
+}
+
+/* =====================================
+   NAVIGATION MOBILE
+   ===================================== */
+
+/* =====================================
+   EN-TÊTE MOBILE
+   ===================================== */
+
+.mobile-header {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+
+  #mobile-menu-btn {
+    background: transparent;
+    border: none;
+    padding: 8px;
+
+    color: inherit;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    width: 240px;
+    z-index: 1100;
+
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+  }
+
+  .app-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .app-main {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* =====================================
+   OVERLAY NAVIGATION MOBILE
+   ===================================== */
+
+.sidebar-overlay {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sidebar-overlay:not(.hidden) {
+    display: block;
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1050;
+  }
 }
