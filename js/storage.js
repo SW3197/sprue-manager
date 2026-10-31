@@ -8,9 +8,16 @@ import { supabase } from "./supabase.js";
 
 const STORAGE_KEY = "sprue-manager-state";
 
+let cloudSaveQueue = Promise.resolve();
+
 export function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  saveStateToCloud();
+
+  cloudSaveQueue = cloudSaveQueue
+    .catch((error) => {
+      console.error("Erreur de sauvegarde précédente :", error);
+    })
+    .then(() => saveStateToCloud());
 }
 
 export function loadState() {
@@ -20,13 +27,14 @@ export function loadState() {
 
   const parsedState = JSON.parse(savedState);
 
-  state.miniatures = parsedState.miniatures || [];
+  state.units = parsedState.units ?? [];
+  state.purchases = parsedState.purchases ?? [];
+  state.wishlist = parsedState.wishlist ?? [];
+  state.hobbySessions = parsedState.hobbySessions ?? [];
+  state.goals = parsedState.goals ?? [];
+  state.events = parsedState.events ?? [];
 
-  state.expenses = parsedState.expenses || [];
-
-  state.paintingSessions = parsedState.paintingSessions || [];
-
-  state.filters = parsedState.filters || {
+  state.filters = parsedState.filters ?? {
     game: "all",
     status: "all",
   };
@@ -43,9 +51,12 @@ export async function saveStateToCloud() {
   }
 
   const cloudState = {
-    miniatures: state.miniatures,
-    expenses: state.expenses,
-    paintingSessions: state.paintingSessions,
+    units: state.units,
+    purchases: state.purchases,
+    wishlist: state.wishlist,
+    hobbySessions: state.hobbySessions,
+    goals: state.goals,
+    events: state.events,
   };
 
   const { error } = await supabase.from("app_state").upsert({
@@ -87,9 +98,12 @@ export async function loadStateFromCloud() {
 
   const cloudState = data.data;
 
-  state.miniatures = cloudState.miniatures ?? [];
-  state.expenses = cloudState.expenses ?? [];
-  state.paintingSessions = cloudState.paintingSessions ?? [];
+  state.units = cloudState.units ?? [];
+  state.purchases = cloudState.purchases ?? [];
+  state.wishlist = cloudState.wishlist ?? [];
+  state.hobbySessions = cloudState.hobbySessions ?? [];
+  state.goals = cloudState.goals ?? [];
+  state.events = cloudState.events ?? [];
 
   // On met aussi à jour la sauvegarde locale.
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -100,7 +114,10 @@ export async function loadStateFromCloud() {
 export function clearLocalState() {
   localStorage.removeItem(STORAGE_KEY);
 
-  state.miniatures = [];
-  state.expenses = [];
-  state.paintingSessions = [];
+  state.units = [];
+  state.purchases = [];
+  state.wishlist = [];
+  state.hobbySessions = [];
+  state.goals = [];
+  state.events = [];
 }

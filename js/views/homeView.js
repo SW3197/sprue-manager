@@ -7,11 +7,13 @@ import { getPaintingTotalMinutes } from "../modules/paintingSessions.js";
 import { formatDuration } from "../modules/paintingSessions.js";
 
 export function renderPaintingCard() {
-    const paintingCardContainer = document.getElementById("painting-card-container");
-    const totalMinutes = getPaintingTotalMinutes();
-    const formattedTotal = formatDuration(totalMinutes);
+  const paintingCardContainer = document.getElementById(
+    "painting-card-container",
+  );
+  const totalMinutes = getPaintingTotalMinutes();
+  const formattedTotal = formatDuration(totalMinutes);
 
-    paintingCardContainer.innerHTML = `
+  paintingCardContainer.innerHTML = `
         <article class="dashboard-card" id="painting-card">
             <h2>Temps de peinture</h2>
             
@@ -25,18 +27,18 @@ export function renderPaintingCard() {
         </article>
     `;
 
-    const paintingCard = document.getElementById("painting-card");
+  const paintingCard = document.getElementById("painting-card");
 
-    paintingCard.addEventListener("click", () => {
-        openPaintingTimeDrawer();
-    })
+  paintingCard.addEventListener("click", () => {
+    openPaintingTimeDrawer();
+  });
 }
 
 function renderRatioCard() {
-    const ratioCardContainer = document.getElementById("ratio-card-container");
-    const ratio = getRatioSummary();
+  const ratioCardContainer = document.getElementById("ratio-card-container");
+  const ratio = getRatioSummary();
 
-    ratioCardContainer.innerHTML = `
+  ratioCardContainer.innerHTML = `
         <article class="dashboard-card" id="ratio-card">
             <h2>Ratio peint / possédé</h2>
             <p class="dashboard-card-value">
@@ -48,18 +50,18 @@ function renderRatioCard() {
         </article>
     `;
 
-    const ratioCard = document.getElementById("ratio-card");
+  const ratioCard = document.getElementById("ratio-card");
 
-    ratioCard.addEventListener("click", () => {
-        openRatioModal();
-    });
+  ratioCard.addEventListener("click", () => {
+    openRatioModal();
+  });
 }
 
 export function renderBudgetCard() {
-    const budgetCardContainer = document.getElementById("budget-card-container");
-    const totalBudgetValue = getBudgetTotal();
+  const budgetCardContainer = document.getElementById("budget-card-container");
+  const totalBudgetValue = getBudgetTotal();
 
-    budgetCardContainer.innerHTML = `
+  budgetCardContainer.innerHTML = `
         <article class="dashboard-card" id="budget-card">
             <h2>Budget hobby</h2>
             <p>${totalBudgetValue.toFixed(2)} €</p>
@@ -67,15 +69,13 @@ export function renderBudgetCard() {
         </article>
     `;
 
-    const budgetCard = document.getElementById("budget-card");
+  const budgetCard = document.getElementById("budget-card");
 
-    budgetCard.addEventListener("click", () => {
-        openBudgetDrawer();
-    });
+  budgetCard.addEventListener("click", () => {
+    openBudgetDrawer();
+  });
 }
 
 export function renderHomeView() {
-    renderBudgetCard();
-    renderPaintingCard();
-    renderRatioCard();
+  //TODO V2 : reconstruire le dashboard
 }

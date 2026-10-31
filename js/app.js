@@ -14,7 +14,7 @@ import {
   saveStateToCloud,
 } from "./storage.js";
 import { renderCollection } from "./views/collectionView.js";
-import { openAddMiniatureDrawer } from "./ui/drawers.js";
+import { openAddMiniatureDrawer, openAddWishlistDrawer } from "./ui/drawers.js";
 import { getFilteredMiniatures } from "./modules/miniatures.js";
 import { renderHomeView } from "./views/homeView.js";
 import { closeDrawer } from "./ui/drawers.js";
@@ -32,6 +32,7 @@ import {
   openPasswordResetRequestModal,
   openPasswordResetModal,
 } from "./views/passwordResetModalView.js";
+import { renderWishlist } from "./views/wishlistView.js";
 
 let isLoggedIn = false;
 let isPasswordRecovery = false;
@@ -93,6 +94,8 @@ const wishlistView = document.getElementById("wishlist-view");
 const mobileMenuBtn = document.getElementById("mobile-menu-btn");
 const appSidebar = document.querySelector(".app-sidebar");
 const sidebarOverlay = document.getElementById("sidebar-overlay");
+
+const addWishlistBtn = document.getElementById("add-wishlist-btn");
 
 // =======================================
 //ÉLÉMENTS DU DOM - Filtres
@@ -224,8 +227,7 @@ function showCollectionTab(tabName) {
 // =======================================
 
 export function refreshCollection() {
-  const filteredMiniatures = getFilteredMiniatures();
-  renderCollection(filteredMiniatures);
+  //TODO V2 : affichage des unités
 }
 
 export function syncCollectionFiltersUI() {
@@ -239,6 +241,7 @@ export function showCollectionViewWithStatusFilter(status) {
   syncCollectionFiltersUI();
 
   showView("collection");
+  showCollectionTab("units");
   refreshCollection();
 }
 
@@ -372,7 +375,12 @@ transactionsTab.addEventListener("click", () => {
 });
 
 wishlistTab.addEventListener("click", () => {
+  renderWishlist();
   showCollectionTab("wishlist");
+});
+
+addWishlistBtn.addEventListener("click", () => {
+  openAddWishlistDrawer();
 });
 
 mobileMenuBtn.addEventListener("click", () => {
@@ -399,7 +407,7 @@ sidebarOverlay.addEventListener("click", () => {
 // =======================================
 
 addMiniatureBtn.addEventListener("click", () => {
-  openAddMiniatureDrawer();
+  // TODO V2 : ouvrir le formulaire d'ajout d'unité ou d'achat
 });
 
 // =======================================

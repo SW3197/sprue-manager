@@ -4,11 +4,15 @@ objectifs.
 */
 
 export const state = {
-    miniatures: [],
-    expenses: [],
-    paintingSessions: [],
-    filters: {
-        game: "all",
-        status: "all"
-    }
+  units: [],
+  purchases: [],
+  wishlist: [],
+  hobbySessions: [],
+  goals: [],
+  events: [],
+
+  filters: {
+    game: "all",
+    status: "all",
+  },
 };
