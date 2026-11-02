@@ -5,3 +5,9 @@ export const gameLabels = {
   KT: "Kill Team",
   WC: "Warcry"
 };
+
+export const wishTypeLabels = {
+    unit: "Unité",
+    box: "Coffret",
+    material: "Matériel hobby"
+};

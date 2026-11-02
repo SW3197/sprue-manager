@@ -243,3 +243,28 @@
     z-index: 1050;
   }
 }
+
+.purchase-unit-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 120px;
+    gap: 8px 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+    border: 1px solid var(--border-color, #ccc);
+    border-radius: 8px;
+}
+
+.purchase-unit-row label {
+    grid-row: 1;
+}
+
+.purchase-unit-row input {
+    grid-row: 2;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.purchase-unit-row button {
+    grid-column: 1 / -1;
+    justify-self: end;
+}

@@ -1,6 +1,7 @@
 import { state } from "../state.js";
 import { saveState } from "../storage.js";
-import { openAddWishlistDrawer } from "../ui/drawers.js";
+import { openAddWishlistDrawer, openPurchaseDrawer } from "../ui/drawers.js";
+import { gameLabels, wishTypeLabels } from "../utils/games.js";
 
 export function renderWishlist() {
   const wishlistGrid = document.getElementById("wishlist-grid");
@@ -42,10 +43,10 @@ export function renderWishlist() {
     details.classList.add("wishlist-item-details");
 
     const type = document.createElement("p");
-    type.textContent = `Type : ${wish.type}`;
+    type.textContent = `Type : ${wishTypeLabels[wish.type] ?? wish.type}`;
 
     const game = document.createElement("p");
-    game.textContent = `Jeu : ${wish.game ?? "Non renseigné"}`;
+    game.textContent = `Jeu : ${gameLabels[wish.game] ?? wish.game}`;
 
     const faction = document.createElement("p");
     faction.textContent = `Faction : ${wish.faction ?? "Non renseignée"}`;
@@ -63,6 +64,17 @@ export function renderWishlist() {
       details.append(faction);
     }
     item.append(header, details);
+
+    const purchaseButton = document.createElement("button");
+    purchaseButton.type = "button";
+    purchaseButton.classList.add("wishlist-purchase-btn");
+    purchaseButton.textContent = "Produit acquis";
+
+    purchaseButton.addEventListener("click", () => {
+      openPurchaseDrawer(wish);
+    });
+
+    details.appendChild(purchaseButton);
 
     const editButton = document.createElement("button");
     editButton.type = "button";
