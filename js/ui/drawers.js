@@ -447,19 +447,22 @@ FONCTION ADD PURCHASE ITEM
 
     giftLabel.append(giftCheckbox, " Article offert");
 
+    function createFieldGroup(label, input) {
+      const group = document.createElement("div");
+      group.classList.add("purchase-field-group");
+
+      group.append(label, input);
+
+      return group;
+    }
+
     article.append(
-      nameLabel, 
-      name, 
-      typeLabel, 
-      type, 
-      gameLabel, 
-      game,
-      factionLabel, 
-      faction,
-      quantityLabel, 
-      quantity, 
-      priceLabel, 
-      price, 
+      createFieldGroup(nameLabel, name),
+      createFieldGroup(typeLabel, type),
+      createFieldGroup(gameLabel, game),
+      createFieldGroup(factionLabel, faction),
+      createFieldGroup(quantityLabel, quantity),
+      createFieldGroup(priceLabel, price),
       giftLabel
     );
 
@@ -581,7 +584,14 @@ FONCTION ADD UNIT ROW
       miniatureCount.value = "1";
       miniatureCount.required = true;
 
-      specificFields.append(miniatureCountLabel, miniatureCount);
+      const miniatureCountGroup = createFieldGroup(
+        miniatureCountLabel,
+        miniatureCount
+      );
+
+      miniatureCountGroup.classList.add("purchase-miniature-count-group");
+
+      specificFields.append(miniatureCountGroup);
     }
     }
 
