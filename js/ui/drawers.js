@@ -3,6 +3,7 @@ import { state } from "../state.js";
 import { saveState } from "../storage.js";
 import { renderWishlist } from "../views/wishlistView.js";
 import { gameLabels, wishTypeLabels } from "../utils/games.js";
+import { createUnitsFromPurchase } from "../modules/units.js";
 
 const drawerContainer = document.getElementById("drawer-container");
 
@@ -251,6 +252,16 @@ APPEL DE OPEN DRAWER
         value="${today}"
         required
       >
+
+      <label class="purchase-unknown-date">
+        <input
+          type="checkbox"
+          id="purchase-date-unknown"
+          name="dateUnknown"
+        >
+        Date d'achat inconnue
+      </label>
+
       <div id="purchase-items-container">
         <h3>Articles achetés</h3>
       </div>
@@ -459,8 +470,6 @@ FONCTION ADD PURCHASE ITEM
     article.append(
       createFieldGroup(nameLabel, name),
       createFieldGroup(typeLabel, type),
-      createFieldGroup(gameLabel, game),
-      createFieldGroup(factionLabel, faction),
       createFieldGroup(quantityLabel, quantity),
       createFieldGroup(priceLabel, price),
       giftLabel
@@ -489,9 +498,21 @@ FONCTION ADD PURCHASE ITEM
     function updateSpecificFields() {
       specificFields.replaceChildren();
 
-    /*-- Bloc si le type est "box" --*/
+      if (type.value === "unit" || type.value === "box") {
+        specificFields.append(
+        createFieldGroup(gameLabel, game)
+        );
+      }
 
-    if (type.value === "box") {
+      if (type.value === "unit") {
+        specificFields.append(
+        createFieldGroup(factionLabel, faction)
+        );
+      }
+
+      /*-- Bloc si le type est "box" --*/
+
+      if (type.value === "box") {
       const composition = document.createElement("div");
       composition.classList.add("purchase-box-composition");
 
@@ -525,6 +546,16 @@ FONCTION ADD UNIT ROW
             id="purchase-unit-name-${index}"
             name="unitName"
             required
+          >
+
+          <label for="purchase-unit-faction-${index}">
+            Faction
+          </label>
+          <input
+            type="text"
+            id="purchase-unit-faction-${index}"
+            name="unitFaction"
+            placeholder="Ex. : Stormcast Eternals"
           >
 
           <label for="purchase-miniature-count-${index}">
@@ -618,8 +649,27 @@ FONCTION ADD UNIT ROW
 
   const purchaseForm = document.getElementById("purchase-form");
 
+  const purchaseDate = document.getElementById("purchase-date");
+  const dateUnknownCheckbox = document.getElementById("purchase-date-unknown");
+
+  dateUnknownCheckbox.addEventListener("change", () => {
+    if (dateUnknownCheckbox.checked) {
+        purchaseDate.value = "";
+        purchaseDate.disabled = true;
+        purchaseDate.required = false;
+    } else {
+        purchaseDate.disabled = false;
+        purchaseDate.required = true;
+        purchaseDate.value = today;
+    }
+  });
+
   purchaseForm.addEventListener("submit", (event) => {
     event.preventDefault();
+
+    const purchaseDateValue = dateUnknownCheckbox.checked
+      ? null
+      : purchaseDate.value;
 
     const articles = purchaseForm.querySelectorAll(".purchase-item");
 
@@ -633,15 +683,44 @@ FONCTION ADD UNIT ROW
         id: crypto.randomUUID(),
         type: article.querySelector('[name="type"]').value,
         name: article.querySelector('[name="name"]').value.trim(),
-        game: article.querySelector('[name="game"]').value || null,
-        faction: article.querySelector('[name="faction"]').value.trim() || null,
+        game: article.querySelector('[name="game"]')?.value || null,
+        faction: article.querySelector('[name="faction"]')?.value.trim() || null,
+        miniatureCount: article.querySelector('[name="type"]').value === "unit"
+          ? article.querySelector(
+            '.purchase-miniature-count-group [name="miniatureCount"]'
+          )?.valueAsNumber ?? null
+          : null,
+        composition: Array.from(
+          article.querySelectorAll(".purchase-unit-row")
+        ).map((unitRow) => ({
+          name: unitRow.querySelector('[name="unitName"]').value.trim(),
+          faction: unitRow.querySelector('[name="unitFaction"]').value.trim() || null,
+          miniatureCount: unitRow.querySelector('[name="miniatureCount"]').valueAsNumber
+        })),
         quantity: Number(article.querySelector('[name="quantity"]').value),
         unitPrice: Number(article.querySelector('[name="unitPrice"]').value),
         isGift: article.querySelector('[name="isGift"]').checked
       };
     });
 
-    console.log("Articles de l'achat :", purchaseItems);
+    const summary = updatePurchaseSummary();
+
+    const purchase = {
+      id: crypto.randomUUID(),
+      date: purchaseDateValue,
+      createdAt: new Date().toISOString(),
+      items: purchaseItems,
+      subtotal: summary.subtotal,
+      additionalCosts: summary.additionalCosts,
+      total: summary.total
+    };
+
+    const newUnits = createUnitsFromPurchase(purchase, state.units);
+
+    state.units.push(...newUnits);
+
+        state.purchases.push(purchase);
+    saveState();
   });
 
 /*=======================================
@@ -693,6 +772,12 @@ FONCTION UPDATE PURCHASE SUMMARY
 
     document.getElementById("purchase-grand-total").textContent =
         formatPrice(total);
+
+    return {
+      subtotal,
+      additionalCosts,
+      total
+    };
   }
 
   purchaseForm.addEventListener("input", updatePurchaseSummary);

@@ -227,7 +227,7 @@ function showCollectionTab(tabName) {
 // =======================================
 
 export function refreshCollection() {
-  //TODO V2 : affichage des unités
+  renderCollection();
 }
 
 export function syncCollectionFiltersUI() {

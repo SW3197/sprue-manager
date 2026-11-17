@@ -1,6 +1,7 @@
 import { deleteMiniature, updateMiniatureStatus } from "../modules/miniatures.js";
 import { refreshCollection } from "../app.js";
 import { gameLabels } from "../utils/games.js";
+import { state } from "../state.js";
 
 const miniaturesGrid = document.getElementById("miniatures-grid");
 
@@ -32,56 +33,25 @@ function setupStatusSelects() {
     });
 }
 
-export function renderCollection(miniaturesToRender = miniatures) {
+export function renderCollection(unitsToRender = state.units) {
     miniaturesGrid.innerHTML = "";
 
-    miniaturesToRender.forEach(miniature => {
+    unitsToRender.forEach(unit => {
 
         const card = `
-        <div class = "miniature-card">
+            <div class="miniature-card">
+                <h3>${unit.name} ${unit.nameSuffix || ""}</h3>
 
-        <h3>${miniature.name}</h3>
-        <p>${gameLabels[miniature.game] || miniature.game}</p>
+                <p>${gameLabels[unit.game] || unit.game}</p>
 
-        <select
-            class="status-select"
-            name="miniature-status"
-            data-id="${miniature.id}"
-            >
-            <option value="boxed" ${miniature.status === "boxed" ? "selected" : ""}>
-            Boîte
-            </option>
+                <p>Faction : ${unit.faction || "Non renseignée"}</p>
 
-            <option value="assembled" ${miniature.status === "assembled" ? "selected" : ""}>
-            Assemblée
-            </option>
+                <p>Figurines : ${unit.miniatureCount ?? "Non renseigné"}</p>
 
-            <option value="primed" ${miniature.status === "primed" ? "selected" : ""}>
-            Sous-couchée
-            </option>
-
-            <option value="painted" ${miniature.status === "painted" ? "selected" : ""}>
-            Peinte
-            </option>
-
-        </select>
-
-        <br>
-
-        <button
-            class="delete-miniature-btn"
-            data-id="${miniature.id}"
-        >
-        Supprimer
-        </button>
-
-        </div>
+                <p>Statut : ${unit.status}</p>
+            </div>
         `;
-
         miniaturesGrid.innerHTML += card;
-
-        setupDeleteButtons();
-        setupStatusSelects();
     });
 }
 

@@ -117,3 +117,7 @@
 .purchase-miniature-count-group {
     max-width: 250px;
 }
+
+.purchase-item-specific-fields > .purchase-field-group {
+    max-width: 400px;
+}
