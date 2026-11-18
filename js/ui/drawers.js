@@ -233,7 +233,11 @@ function setupDrawerOverlay() {
   });
 }
 
-export function openPurchaseDrawer(wish = null) {
+export function openPurchaseDrawer(wishes = []) {
+  const selectedWishes = Array.isArray(wishes)
+        ? wishes
+        : wishes ? [wishes] : [];
+
   const today = new Date().toLocaleDateString("en-CA");
 
   /*=======================================
@@ -338,6 +342,7 @@ FONCTION ADD PURCHASE ITEM
     const article = document.createElement("div");
     article.classList.add("purchase-item");
     article.dataset.itemIndex = itemIndex;
+    article.dataset.wishId = wish.id ?? "";
 
     const removeArticleButton = document.createElement("button");
     removeArticleButton.type = "button";
@@ -634,9 +639,9 @@ FONCTION ADD UNIT ROW
     article.appendChild(removeArticleButton);
   }
 
-  if (wish) {
+  selectedWishes.forEach((wish) => {
     addPurchaseItem(wish);
-  }
+  });
 
   const addPurchaseItemBtn = document.getElementById(
     "add-purchase-item-btn"
@@ -681,6 +686,7 @@ FONCTION ADD UNIT ROW
     const purchaseItems = Array.from(articles).map((article) => {
       return {
         id: crypto.randomUUID(),
+        wishId: article.dataset.wishId || null,
         type: article.querySelector('[name="type"]').value,
         name: article.querySelector('[name="name"]').value.trim(),
         game: article.querySelector('[name="game"]')?.value || null,
@@ -719,8 +725,34 @@ FONCTION ADD UNIT ROW
 
     state.units.push(...newUnits);
 
-        state.purchases.push(purchase);
+    state.purchases.push(purchase);
+
+    purchaseItems.forEach((item) => {
+      if (!item.wishId) {
+        return;
+      }
+
+      const wishIndex = state.wishlist.findIndex(
+          (wish) => wish.id === item.wishId
+      );
+
+      if (wishIndex === -1) {
+          return;
+      }
+
+      const wish = state.wishlist[wishIndex];
+
+      if (item.quantity >= wish.quantity) {
+          state.wishlist.splice(wishIndex, 1);
+      } else {
+          wish.quantity -= item.quantity;
+      }
+    });
+
     saveState();
+
+    renderWishlist(true);
+    closeDrawer();
   });
 
 /*=======================================

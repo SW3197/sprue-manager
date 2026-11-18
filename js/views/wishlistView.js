@@ -3,10 +3,49 @@ import { saveState } from "../storage.js";
 import { openAddWishlistDrawer, openPurchaseDrawer } from "../ui/drawers.js";
 import { gameLabels, wishTypeLabels } from "../utils/games.js";
 
-export function renderWishlist() {
+const selectedWishIds = new Set();
+
+function updateBulkPurchaseButton() {
+    const button = document.getElementById("wishlist-bulk-purchase-btn");
+
+    if (!button) return;
+
+    button.style.visibility = selectedWishIds.size >= 2 ? "visible" : "hidden";
+}
+
+export function renderWishlist(resetSelection = false) {
+    if (resetSelection) {
+        selectedWishIds.clear();
+    }
   const wishlistGrid = document.getElementById("wishlist-grid");
 
   wishlistGrid.innerHTML = "";
+
+  selectedWishIds.forEach((id) => {
+    if (!state.wishlist.some((wish) => wish.id === id)) {
+        selectedWishIds.delete(id);
+    }
+  });
+
+  const bulkPurchaseButton = document.createElement("button");
+  bulkPurchaseButton.id = "wishlist-bulk-purchase-btn";
+  bulkPurchaseButton.type = "button";
+  bulkPurchaseButton.textContent = "Sélection achetée";
+
+  bulkPurchaseButton.addEventListener("click", () => {
+    const selectedWishes = state.wishlist.filter((wish) =>
+        selectedWishIds.has(wish.id)
+    );
+
+    openPurchaseDrawer(selectedWishes);
+  });
+
+  document.getElementById("wishlist-bulk-purchase-btn")?.remove();
+
+  const wishlistToolbar = document.querySelector(".wishlist-toolbar");
+  wishlistToolbar.appendChild(bulkPurchaseButton);
+
+  updateBulkPurchaseButton();
 
   if (state.wishlist.length === 0) {
     wishlistGrid.innerHTML = "<p>Votre wishlist est vide.</p>";
@@ -19,6 +58,25 @@ export function renderWishlist() {
 
     const header = document.createElement("summary");
     header.classList.add("wishlist-item-header");
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.classList.add("wishlist-select-checkbox");
+    checkbox.checked = selectedWishIds.has(wish.id);
+
+    checkbox.addEventListener("click", (event) => {
+        event.stopPropagation();
+    });
+
+    checkbox.addEventListener("change", () => {
+        if (checkbox.checked) {
+            selectedWishIds.add(wish.id);
+        } else {
+            selectedWishIds.delete(wish.id);
+        }
+
+        updateBulkPurchaseButton();
+    });
 
     const name = document.createElement("span");
     name.textContent = wish.name;
@@ -38,7 +96,7 @@ export function renderWishlist() {
     chevron.textContent = "⌄";
 
     end.appendChild(chevron);
-    header.append(name, end);
+    header.append(checkbox, name, end);
     const details = document.createElement("div");
     details.classList.add("wishlist-item-details");
 
