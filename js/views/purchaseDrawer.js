@@ -485,6 +485,7 @@ FONCTION ADD UNIT ROW
 
     const purchase = {
       id: crypto.randomUUID(),
+      type: "purchase",
       date: purchaseDateValue,
       createdAt: new Date().toISOString(),
       items: purchaseItems,
@@ -497,7 +498,7 @@ FONCTION ADD UNIT ROW
 
     state.units.push(...newUnits);
 
-    state.purchases.push(purchase);
+    state.transactions.push(purchase);
 
     purchaseItems.forEach((item) => {
       if (!item.wishId) {

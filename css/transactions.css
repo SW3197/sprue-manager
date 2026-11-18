@@ -1,0 +1,141 @@
+/* =====================================
+   LISTE DES TRANSACTIONS
+   ===================================== */
+
+#transactions-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+/* Carte */
+
+.transaction-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 4px solid #dc6666;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* En-tête */
+
+.transaction-summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.transaction-summary::-webkit-details-marker {
+  display: none;
+}
+
+.transaction-summary::marker {
+  content: "";
+}
+
+.transaction-summary:hover {
+  background: rgba(128, 128, 128, 0.06);
+}
+
+/* Type de transaction */
+
+.transaction-type {
+  font-weight: 600;
+  color: #dc6666;
+}
+
+/* Date */
+
+.transaction-date {
+  flex: 1;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+/* Montant */
+
+.transaction-amount {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Chevron */
+
+.transaction-summary::after {
+  content: "⌄";
+  font-size: 1.4rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.transaction-card[open] .transaction-summary::after {
+  transform: rotate(180deg);
+}
+
+/* Contenu dépliable */
+
+.transaction-content {
+  padding: 16px;
+  border-top: 1px solid var(--color-border);
+}
+
+/* Adaptation mobile */
+
+@media (max-width: 600px) {
+  .transaction-summary {
+    flex-wrap: wrap;
+    gap: 8px 12px;
+  }
+
+  .transaction-date {
+    flex-basis: 100%;
+    order: 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transaction-summary::after {
+    transition: none;
+  }
+}
+
+/* =====================================
+   UNITÉS ACHETÉES INDIVIDUELLEMENT
+   ===================================== */
+
+.transaction-unit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 0;
+}
+
+.transaction-unit + .transaction-unit {
+  border-top: 1px solid var(--color-border);
+}
+
+.transaction-unit-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.transaction-unit-info strong {
+  overflow-wrap: anywhere;
+}
+
+.transaction-unit-info span {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
+
+.transaction-unit-price {
+  font-weight: 600;
+  white-space: nowrap;
+}

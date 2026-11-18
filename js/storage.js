@@ -28,7 +28,7 @@ export function loadState() {
   const parsedState = JSON.parse(savedState);
 
   state.units = parsedState.units ?? [];
-  state.purchases = parsedState.purchases ?? [];
+  state.transactions = parsedState.transactions ?? [];
   state.wishlist = parsedState.wishlist ?? [];
   state.hobbySessions = parsedState.hobbySessions ?? [];
   state.goals = parsedState.goals ?? [];
@@ -52,7 +52,7 @@ export async function saveStateToCloud() {
 
   const cloudState = {
     units: state.units,
-    purchases: state.purchases,
+    transactions: state.transactions,
     wishlist: state.wishlist,
     hobbySessions: state.hobbySessions,
     goals: state.goals,
@@ -99,7 +99,7 @@ export async function loadStateFromCloud() {
   const cloudState = data.data;
 
   state.units = cloudState.units ?? [];
-  state.purchases = cloudState.purchases ?? [];
+  state.transactions = cloudState.transactions ?? [];
   state.wishlist = cloudState.wishlist ?? [];
   state.hobbySessions = cloudState.hobbySessions ?? [];
   state.goals = cloudState.goals ?? [];
@@ -115,7 +115,7 @@ export function clearLocalState() {
   localStorage.removeItem(STORAGE_KEY);
 
   state.units = [];
-  state.purchases = [];
+  state.transactions = [];
   state.wishlist = [];
   state.hobbySessions = [];
   state.goals = [];

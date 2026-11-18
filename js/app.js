@@ -32,6 +32,7 @@ import {
   openPasswordResetModal,
 } from "./views/passwordResetModalView.js";
 import { renderWishlist } from "./views/wishlistView.js";
+import { renderTransactions } from "./views/transactionsView.js";
 
 let isLoggedIn = false;
 let isPasswordRecovery = false;
@@ -196,6 +197,7 @@ function showCollectionTab(tabName) {
   }
 
   if (tabName === "transactions") {
+    renderTransactions();
     transactionsView.classList.remove("hidden");
   }
 

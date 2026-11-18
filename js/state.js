@@ -5,7 +5,7 @@ objectifs.
 
 export const state = {
   units: [],
-  purchases: [],
+  transactions: [],
   wishlist: [],
   hobbySessions: [],
   goals: [],

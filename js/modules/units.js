@@ -36,6 +36,7 @@ export function createUnitsFromPurchase(purchase, existingUnits = []) {
                 const newUnit = {
                     id: crypto.randomUUID(),
                     purchaseId: purchase.id,
+                    purchaseItemId: item.id,
                     name: item.name,
                     nameSuffix: "",
                     game: item.game,
@@ -55,6 +56,7 @@ export function createUnitsFromPurchase(purchase, existingUnits = []) {
                     const newUnit = {
                         id: crypto.randomUUID(),
                         purchaseId: purchase.id,
+                        purchaseItemId: item.id,
                         name: containedUnit.name,
                         nameSuffix: "",
                         game: item.game,
