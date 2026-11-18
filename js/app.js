@@ -14,8 +14,7 @@ import {
   saveStateToCloud,
 } from "./storage.js";
 import { renderCollection } from "./views/collectionView.js";
-import { openAddMiniatureDrawer, openAddWishlistDrawer } from "./ui/drawers.js";
-import { getFilteredMiniatures } from "./modules/miniatures.js";
+import { openAddWishlistDrawer } from "./views/wishlistDrawer.js";
 import { renderHomeView } from "./views/homeView.js";
 import { closeDrawer } from "./ui/drawers.js";
 import { closeModal, requestCloseModal } from "./ui/modals.js";
