@@ -2,6 +2,12 @@
    LISTE DES TRANSACTIONS
    ===================================== */
 
+.transactions-toolbar {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
 #transactions-list {
   display: flex;
   flex-direction: column;
@@ -16,6 +22,10 @@
   border-left: 4px solid #dc6666;
   border-radius: var(--radius-lg);
   overflow: hidden;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 0 12px;
+  box-sizing: border-box;
 }
 
 /* En-tête */
@@ -138,4 +148,318 @@
 .transaction-unit-price {
   font-weight: 600;
   white-space: nowrap;
+}
+
+/* =====================================
+   COFFRETS ACHETÉS
+   ===================================== */
+
+.transaction-box {
+  padding: 12px 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.transaction-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.transaction-box-units {
+  margin-top: 8px;
+  margin-left: 16px;
+  padding-left: 16px;
+  border-left: 2px solid var(--color-border);
+}
+
+.transaction-box-units .transaction-unit {
+  padding: 8px 0;
+}
+
+.transaction-box-title {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.transaction-box-quantity {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+/* =====================================
+   FRAIS SUPPLÉMENTAIRES
+   ===================================== */
+
+.transaction-additional-costs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 12px 0;
+  margin-top: 8px;
+
+  border-top: 1px solid var(--color-border);
+}
+
+.transaction-additional-costs span {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.transaction-additional-costs strong {
+  white-space: nowrap;
+}
+
+/* Actions sur une transaction */
+
+.transaction-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+}
+
+.transaction-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+}
+
+.transaction-edit-btn:hover {
+  border-color: currentColor;
+}
+
+.transaction-delete-btn {
+  margin-left: auto;
+  color: #e57373;
+}
+
+.transaction-delete-btn:hover {
+  background: rgba(229, 115, 115, 0.1);
+  border-color: #e57373;
+}
+
+/* Animation au survol */
+.transaction-actions button {
+  transition:
+    transform 0.1s ease-out,
+    background-color 0.1s ease-out,
+    border-color 0.1s ease-out,
+    box-shadow 0.1s ease-out;
+}
+
+.transaction-actions button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Animation au clic */
+.transaction-actions button:active {
+  transform: translateY(0) scale(0.95);
+}
+
+/* Accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  .transaction-actions button {
+    transition: none;
+  }
+
+  .transaction-actions button:hover,
+  .transaction-actions button:active {
+    transform: none;
+  }
+}
+
+/* Mode édition */
+
+.transaction-actions button[hidden] {
+  display: none;
+}
+
+.transaction-cancel-btn {
+  width: auto !important;
+  padding: 0 12px !important;
+}
+
+.transaction-card.editing .transaction-edit-btn {
+  border-color: var(--color-border);
+}
+
+/* Commandes visibles uniquement en mode édition */
+
+.transaction-remove-btn,
+.transaction-edit-fields {
+  display: none;
+}
+
+.transaction-card.editing .transaction-remove-btn {
+  display: inline-flex;
+}
+
+.transaction-card.editing .transaction-edit-fields {
+  display: flex;
+}
+
+/* Bouton de retrait */
+
+.transaction-remove-btn {
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  color: #e57373;
+  cursor: pointer;
+}
+
+.transaction-remove-btn:hover {
+  background: rgba(229, 115, 115, 0.1);
+  border-color: #e57373;
+}
+
+/* Zone d'édition */
+
+.transaction-edit-fields {
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.transaction-add-article-btn {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.transaction-edit-fees {
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border);
+}
+
+.transaction-edit-fees label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.transaction-edit-fees input {
+  width: 110px;
+}
+
+.transaction-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+/* Masquer les frais existants pendant l'édition */
+.transaction-card.editing .transaction-additional-costs:not(.transaction-edit-fees) {
+    display: none;
+}
+
+.transaction-edit-fees {
+    margin-top: 0;
+}
+
+.transaction-edit-fees label {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.transaction-edit-fees label {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 400;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+}
+
+.transaction-add-article-btn {
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 8px 0;
+
+    color: var(--color-muted);
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 400;
+
+    box-shadow: none;
+    transition: color 0.15s ease;
+}
+
+.transaction-add-article-btn:hover {
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+    color: var(--color-text);
+}
+
+.transaction-add-article-btn:active {
+    transform: none;
+}
+
+/* Champs de modification du prix */
+
+.transaction-price-editor {
+    display: none;
+    align-items: center;
+    gap: 12px;
+}
+
+.transaction-card.editing .transaction-price-editor {
+    display: flex;
+}
+
+/* Masquer le prix affiché pendant l'édition */
+
+.transaction-card.editing .transaction-unit-price {
+    display: none;
+}
+
+.transaction-price-input {
+    width: 100px;
+    text-align: right;
+}
+
+/* Checkbox Cadeau */
+
+.transaction-gift-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    cursor: pointer;
+}
+
+.transaction-gift-label input {
+    cursor: pointer;
 }

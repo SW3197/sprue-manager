@@ -33,6 +33,7 @@ import {
 } from "./views/passwordResetModalView.js";
 import { renderWishlist } from "./views/wishlistView.js";
 import { renderTransactions } from "./views/transactionsView.js";
+import { openPurchaseDrawer } from "./views/purchaseDrawer.js";
 
 let isLoggedIn = false;
 let isPasswordRecovery = false;
@@ -96,6 +97,7 @@ const appSidebar = document.querySelector(".app-sidebar");
 const sidebarOverlay = document.getElementById("sidebar-overlay");
 
 const addWishlistBtn = document.getElementById("add-wishlist-btn");
+const addTransactionBtn = document.getElementById("add-transaction-btn");
 
 // =======================================
 //ÉLÉMENTS DU DOM - Filtres
@@ -382,6 +384,10 @@ wishlistTab.addEventListener("click", () => {
 
 addWishlistBtn.addEventListener("click", () => {
   openAddWishlistDrawer();
+});
+
+addTransactionBtn.addEventListener("click", () => {
+  openPurchaseDrawer();
 });
 
 mobileMenuBtn.addEventListener("click", () => {

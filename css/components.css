@@ -143,9 +143,9 @@
 
 .wishlist-item {
   width: 100%;
-  max-width: 700px;
+  max-width: 600px;
   box-sizing: border-box;
-  margin: 0 auto 12px;
+  margin: 0 0 12px;
 
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -317,7 +317,8 @@
   }
 }
 
-#add-wishlist-btn {
+#add-wishlist-btn,
+#add-transaction-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -331,23 +332,28 @@
     box-shadow 0.1s ease-out;
 }
 
-#add-wishlist-btn:hover {
+#add-wishlist-btn:hover,
+#add-transaction-btn:hover {
   transform: translateY(-3px);
   filter: brightness(1.12);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
 
-#add-wishlist-btn:active {
+#add-wishlist-btn:active,
+#add-transaction-btn:active {
   transform: translateY(0) scale(0.97);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  #add-wishlist-btn {
+  #add-wishlist-btn,
+  #add-transaction-btn {
     transition: none;
   }
 
   #add-wishlist-btn:hover,
-  #add-wishlist-btn:active {
+  #add-wishlist-btn:active,
+  #add-transaction-btn:hover,
+  #add-transaction-btn:active {
     transform: none;
   }
 }

@@ -4,6 +4,7 @@ import { saveState } from "../storage.js";
 import { renderWishlist } from "./wishlistView.js";
 import { gameLabels, wishTypeLabels } from "../utils/games.js";
 import { createUnitsFromPurchase } from "../modules/units.js";
+import { renderTransactions } from "./transactionsView.js";
 
 export function openPurchaseDrawer(wishes = []) {
   const selectedWishes = Array.isArray(wishes)
@@ -525,6 +526,8 @@ FONCTION ADD UNIT ROW
     saveState();
 
     renderWishlist(true);
+    renderTransactions();
+    
     closeDrawer();
   });
 
