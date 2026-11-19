@@ -1,6 +1,30 @@
 import { state } from "../state.js";
 import { saveState } from "../storage.js";
 
+function finalizePurchaseRemoval(transaction) {
+    if (transaction.items.length === 0) {
+        state.transactions = state.transactions.filter(
+            (existingTransaction) =>
+                existingTransaction.id !== transaction.id
+        );
+    } else {
+        transaction.subtotal = transaction.items.reduce(
+            (total, item) => {
+                if (item.isGift) return total;
+
+                return total + item.unitPrice * item.quantity;
+            },
+            0
+        );
+
+        transaction.total =
+            transaction.subtotal + transaction.additionalCosts;
+    }
+
+    saveState();
+    renderTransactions();
+}
+
 export function renderTransactions() {
   const transactionsList = document.getElementById("transactions-list");
 
@@ -70,7 +94,7 @@ export function renderTransactions() {
     content.classList.add("transaction-content");
     const priceEditors = new Map();
 
-    function createRemoveButton() {
+    function createRemoveButton(onRemove) {
         const button = document.createElement("button");
         button.type = "button";
         button.classList.add("transaction-remove-btn");
@@ -87,6 +111,10 @@ export function renderTransactions() {
             <path d="M8 12h8"/>
             </svg>
         `;
+
+        if (onRemove) {
+            button.addEventListener("click", onRemove);
+        }
 
         return button;
     }
@@ -182,7 +210,42 @@ export function renderTransactions() {
                 unitActions.append(unitPrice);
             }
 
-            unitActions.appendChild(createRemoveButton());
+            unitActions.appendChild(
+                createRemoveButton(() => {
+                    const confirmed = confirm(
+                        `Supprimer définitivement "${unit.name}" de cet achat et de la Collection ?`
+                    );
+
+                    if (!confirmed) return;
+
+                    // Supprimer uniquement l'unité sélectionnée
+                    state.units = state.units.filter(
+                        (existingUnit) => existingUnit.id !== unit.id
+                    );
+
+                    // Diminuer la quantité de l'article acheté
+                    item.quantity -= 1;
+
+                    // Supprimer l'article si aucun exemplaire ne reste
+                    if (item.quantity === 0) {
+                        transaction.items = transaction.items.filter(
+                            (existingItem) => existingItem.id !== item.id
+                        );
+                    }
+
+                    // Recalculer les montants
+                    transaction.subtotal = transaction.items.reduce(
+                        (total, purchasedItem) => {
+                            if (purchasedItem.isGift) return total;
+
+                            return total + purchasedItem.unitPrice * purchasedItem.quantity;
+                        },
+                        0
+                    );
+
+                    finalizePurchaseRemoval(transaction);
+                })
+            );
 
             unitRow.append(unitInfo, unitActions);
             content.appendChild(unitRow);
@@ -235,7 +298,39 @@ export function renderTransactions() {
         boxActions.append(
             boxPrice,
             priceEditor,
-            createRemoveButton()
+            createRemoveButton(() => {
+                const confirmed = confirm(
+                    `Supprimer définitivement le coffret "${item.name}" de cet achat et toutes les unités associées de la Collection ?`
+                );
+
+                if (!confirmed) return;
+
+                // Supprimer les unités provenant de cet article
+                state.units = state.units.filter(
+                    (unit) => !(
+                        unit.purchaseId === transaction.id &&
+                        unit.purchaseItemId === item.id
+                    )
+                );
+
+                // Retirer le coffret de la transaction
+                transaction.items = transaction.items.filter(
+                    (existingItem) => existingItem.id !== item.id
+                );
+
+                // Recalculer le sous-total
+                transaction.subtotal = transaction.items.reduce(
+                    (total, purchasedItem) => {
+                        if (purchasedItem.isGift) return total;
+
+                        return total +
+                            purchasedItem.unitPrice * purchasedItem.quantity;
+                    },
+                    0
+                );
+
+                finalizePurchaseRemoval(transaction);
+            })
         );
 
         boxHeader.append(boxTitle, boxActions);
@@ -314,7 +409,31 @@ export function renderTransactions() {
         materialActions.append(
             materialPrice,
             priceEditor,
-            createRemoveButton()
+            createRemoveButton(() => {
+                const confirmed = confirm(
+                    `Supprimer définitivement "${item.name}" de cet achat ?`
+                );
+
+                if (!confirmed) return;
+
+                // Retirer le matériel de la transaction
+                transaction.items = transaction.items.filter(
+                    (existingItem) => existingItem.id !== item.id
+                );
+
+                // Recalculer le sous-total
+                transaction.subtotal = transaction.items.reduce(
+                    (total, purchasedItem) => {
+                        if (purchasedItem.isGift) return total;
+
+                        return total +
+                            purchasedItem.unitPrice * purchasedItem.quantity;
+                    },
+                    0
+                );
+
+                finalizePurchaseRemoval(transaction);
+            })
         );
 
         materialRow.append(materialInfo, materialActions);
@@ -407,28 +526,35 @@ export function renderTransactions() {
 
     editButton.addEventListener("click", () => {
         if (card.classList.contains("editing")) {
-            // Vérifier les valeurs avant toute modification
+            // Vérifier les prix avant de modifier les données
+            for (const editor of priceEditors.values()) {
+                const priceInput = editor.priceInput;
+                const unitPrice = Number(priceInput.value);
+
+                if (
+                    priceInput.value.trim() === "" ||
+                    !Number.isFinite(unitPrice) ||
+                    unitPrice < 0 ||
+                    !priceInput.validity.valid
+                ) {
+                    alert("Le prix unitaire doit être un montant valide et positif ou nul.");
+                    priceInput.focus();
+                    return;
+                }
+            }
+
+            // Préparer les articles modifiés
             const updatedItems = transaction.items.map((item) => {
                 const editor = priceEditors.get(item.id);
 
                 if (!editor) return { ...item };
 
-                const unitPrice = Number(editor.priceInput.value);
-
-                if (
-                    editor.priceInput.value.trim() === "" ||
-                    !Number.isFinite(unitPrice) ||
-                    unitPrice < 0
-                ) {
-                    throw new Error("Prix unitaire invalide");
-                }
-
                 return {
                     ...item,
-                    unitPrice,
+                    unitPrice: Number(editor.priceInput.value),
                     isGift: editor.giftCheckbox.checked
                 };
-            });
+            });           
 
             const additionalCosts = Number(feesInput.value);
 
